@@ -1,0 +1,30 @@
+---
+title: "Welcome to bored strong nerd"
+description: |
+  Welcome to bored strong nerd where we look at the numbers of strength-related data and some other stuff. 
+author:
+  - name: Philipp Giese
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+# Learn more about creating blogs with Distill at:
+# https://rstudio.github.io/distill/blog.html
+
+```
+
+Hi! Since everybody needs a webpage I pondered (again ;)) about starting a webpage. And what are better topics to talk about than the ones you know a little bit about or are at least interested? 
+
+So the idea is to talk about these things: 
+
+- *Nerdy* stuff because I am a nerd. Though I suck at it one of my favourite pastimes are roguelike games such as Nethack or Angband. 
+- *Strength-related* stuff because I am interested in strength-related sport, i.e. strongman, powerlifting, armwrestling, sumo...
+- and intersections of these topics such as looking at *strength in numbers*
+
+So without further ado, lets start! 
+
+

@@ -1,0 +1,19 @@
+---
+title: "About this blog"
+description: |
+  Who am I and what do I do here
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+Hi! Since everybody needs a webpage I pondered (again ;)) about starting a webpage. And what are better topics to talk about than the ones you know a little bit about or are at least interested? 
+
+So the idea is to talk about these things: 
+
+- *Nerdy* stuff because I am a nerd. Though I suck at it one of my favourite pastimes are roguelike games such as Nethack or Angband. 
+- *Strength-related* stuff because I am interested in strength-related sport, i.e. strongman, powerlifting, armwrestling, sumo...
+- and intersections of these topics such as looking at *strength in numbers*
+
+So without further ado, lets start! 

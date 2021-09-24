@@ -1,0 +1,19 @@
+[
+  {
+    "path": "posts/welcome/",
+    "title": "Welcome to bored strong nerd",
+    "description": "Welcome to bored strong nerd where we look at the numbers of strength-related data and some other stuff.",
+    "author": [
+      {
+        "name": "Philipp Giese",
+        "url": {}
+      }
+    ],
+    "date": "2021-08-29",
+    "categories": [],
+    "contents": "\nHi! Since everybody needs a webpage I pondered (again ;)) about starting a webpage. And what are better topics to talk about than the ones you know a little bit about or are at least interested?\nSo the idea is to talk about these things:\nNerdy stuff because I am a nerd. Though I suck at it one of my favourite pastimes are roguelike games such as Nethack or Angband.\nStrength-related stuff because I am interested in strength-related sport, i.e. strongman, powerlifting, armwrestling, sumo…\nand intersections of these topics such as looking at strength in numbers\nSo without further ado, lets start!\n\n\n\n",
+    "preview": {},
+    "last_modified": "2021-08-29T14:31:24+02:00",
+    "input_file": "welcome.knit.md"
+  }
+]
