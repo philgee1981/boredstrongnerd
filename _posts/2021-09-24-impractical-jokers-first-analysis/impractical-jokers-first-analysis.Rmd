@@ -1,0 +1,94 @@
+---
+title: "Impractical Jokers - first analysis"
+description: |
+  A short description of the post.
+author:
+  - name: Philipp Giese
+    url: {}
+date: 09-24-2021
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+The popular show [Impractical Jokers](https://en.wikipedia.org/wiki/Impractical_Jokers) is an interesting mixture between a comedy/hidden camera prank show and a game show. In it, "four lifelong friends continue to embarass each other". Joe Gatto, James Murray, Brian Quinn and Sal Volcano pose each other different types of challenges. Whenever someone cannot pass the challenge, he loses. Each episode, the person with the most losses is "tonights loser" and has to face a punishment. 
+
+In this article, we start with a small analysis work where we would like to get some understanding "who is the biggest loser". Fans of the show will already say *SAL, duh*, but lets look a little bit more thoroughly. Not only to gain some (perhaps not too important) insight about these numbers but to learn some basics about Web scraping. 
+
+## Get data from structured texts
+
+Data analysis is not that much without - you guessed it - data. So where do we get the impractical jokers data? 
+
+Lets get our hands dirty! I am no genius, thus I used [the internet](https://kyleake.medium.com/wikipedia-data-scraping-with-r-rvest-in-action-3c419db9af2d). So who would like to look for some technical details, this is where you have to go. 
+
+First, lets get the correct libraries: 
+
+```{r, include=FALSE}
+library(tidyverse)
+library(rvest)
+library(rlist)
+library(stringi)
+library(htmltab)
+```
+
+To get the initial information, we neet the [URL](https://en.wikipedia.org/wiki/List_of_Impractical_Jokers_episodes) which can be subsequently analyzed by examining the correct tags: 
+
+```{r}
+url = 'https://en.wikipedia.org/wiki/List_of_Impractical_Jokers_episodes'
+```
+
+This URL in itself is already quite interesting as we can get some information about the nine seasons of impractical jokers: 
+
+```{r}
+url %>%
+  read_html() %>% 
+  html_node('body #content #bodyContent #mw-content-text .mw-parser-output table') %>%
+  html_table(fill = TRUE)
+```
+
+However, not sooo much interesting stuff here. For that we have to dig deeper: 
+
+```{r}
+
+data_final <- url %>%
+  read_html() %>%
+  html_node(xpath = paste0('//*[@id="mw-content-text"]/div/table[',2,']')) %>%
+  html_table(fill = TRUE) %>% 
+  rename("No.overall" = No.) %>% 
+  mutate(`No. inseason` = No.overall) %>%
+  select(No.overall,`No. inseason`,Title,`Original air date`, `Losing Joker(s)`,`U.S. viewers(millions)`) %>% mutate( season = 1)
+
+for(i in 3:10){
+ data_new <- url %>%
+  read_html() %>%
+  html_node(xpath = paste0('//*[@id="mw-content-text"]/div/table[',i,']')) %>%
+  html_table(fill = TRUE) %>% mutate(season = i-1)
+ 
+ names(data_new) <- c("No.overall", "No. inseason","Title", "Original air date", "Losing Joker(s)", "U.S. viewers(millions)", "season")
+
+data_final <- bind_rows(data_final,data_new) 
+}
+
+data_final
+
+```
+
+Now we have all interesting data, lets tidy it up a little to get it into the correct shape: 
+
+```{r}
+data_final <- data_final %>% mutate(Sal = as.numeric(grepl("Sal",`Losing Joker(s)`)),Joe = as.numeric(grepl("Joe",`Losing Joker(s)`)),Murr = as.numeric(grepl("Murr",`Losing Joker(s)`)),Q = as.numeric(grepl("Q",`Losing Joker(s)`)))
+```
+
+Finally: We have enough data to get our first plot:
+
+```{r}
+data_final %>% select(No.overall,`No. inseason`,Sal,Joe,Murr,Q) %>% mutate(Sal = cumsum(Sal),Joe = cumsum(Joe),Murr = cumsum(Murr),Q = cumsum(Q)) %>% pivot_longer(cols = c(Sal,Joe,Murr,Q),names_to = "Losers", values_to = "value") %>% mutate(get_lines = ifelse(`No. inseason` == 1,1,0)) %>% ggplot(aes(x=No.overall,y=value,col=Losers)) + geom_point() + labs(title = "Number of losses",subtitle = "How the numbers of losses for the impractical jokers have developed", x = "Episode overall",y= "No. losses total") + theme_minimal()
+```
+
+
+
+

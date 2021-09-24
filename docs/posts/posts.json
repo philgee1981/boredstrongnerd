@@ -1,5 +1,22 @@
 [
   {
+    "path": "posts/2021-09-24-impractical-jokers-first-analysis/",
+    "title": "Impractical Jokers - first analysis",
+    "description": "A short description of the post.",
+    "author": [
+      {
+        "name": "Philipp Giese",
+        "url": {}
+      }
+    ],
+    "date": "2021-09-24",
+    "categories": [],
+    "contents": "\nThe popular show Impractical Jokers is an interesting mixture between a comedy/hidden camera prank show and a game show. In it, “four lifelong friends continue to embarass each other”. Joe Gatto, James Murray, Brian Quinn and Sal Volcano pose each other different types of challenges. Whenever someone cannot pass the challenge, he loses. Each episode, the person with the most losses is “tonights loser” and has to face a punishment.\nIn this article, we start with a small analysis work where we would like to get some understanding “who is the biggest loser”. Fans of the show will already say SAL, duh, but lets look a little bit more thoroughly. Not only to gain some (perhaps not too important) insight about these numbers but to learn some basics about Web scraping.\nGet data from structured texts\nData analysis is not that much without - you guessed it - data. So where do we get the impractical jokers data?\nLets get our hands dirty! I am no genius, thus I used the internet. So who would like to look for some technical details, this is where you have to go.\nFirst, lets get the correct libraries:\nTo get the initial information, we neet the URL which can be subsequently analyzed by examining the correct tags:\n\n\n\nThis URL in itself is already quite interesting as we can get some information about the nine seasons of impractical jokers:\n\n# A tibble: 11 × 6\n   Season   Season   Episodes Episodes `Originally air… `Originally air…\n   <chr>    <chr>    <chr>    <chr>    <chr>            <chr>           \n 1 \"Season\" Season   Episodes Episodes First aired      Last aired      \n 2 \"\"       1        16       16       December 15, 20… May 3, 2012 (20…\n 3 \"\"       2        28       28       September 6, 20… December 12, 20…\n 4 \"\"       3        31       31       January 2, 2014… October 30, 201…\n 5 \"\"       4        26       26       January 29, 201… October 22, 201…\n 6 \"\"       5        26       26       February 11, 20… November 3, 201…\n 7 \"\"       6        26       26       February 9, 201… November 2, 201…\n 8 \"\"       7        26       26       February 1, 201… December 6, 201…\n 9 \"\"       8        26       26       March 28, 2019 … March 5, 2020 (…\n10 \"\"       9        TBA      TBA      February 4, 202… TBA             \n11 \"\"       Specials 37       37       February 2, 201… TBA             \n\nHowever, not sooo much interesting stuff here. For that we have to dig deeper:\n\n# A tibble: 224 × 7\n   No.overall `No. inseason` Title   `Original air d… `Losing Joker(s…\n        <int>          <int> <chr>   <chr>            <chr>           \n 1          1              1 \"\\\"Pay… December 15, 20… Sal             \n 2          2              2 \"\\\"But… December 15, 20… Sal             \n 3          3              3 \"\\\"Unm… December 22, 20… Sal             \n 4          4              4 \"\\\"Boa… December 29, 20… Joe             \n 5          5              5 \"\\\"Dra… January 5, 2012  Sal             \n 6          6              6 \"\\\"Pan… January 12, 2012 Murr            \n 7          7              7 \"\\\"Out… January 19, 2012 Joe             \n 8          8              8 \"\\\"Who… January 26, 2012 Q               \n 9          9              9 \"\\\"A L… February 16, 20… Murr            \n10         10             10 \"\\\"Wha… March 29, 2012   Q               \n# … with 214 more rows, and 2 more variables:\n#   U.S. viewers(millions) <chr>, season <dbl>\n\nNow we have all interesting data, lets tidy it up a little to get it into the correct shape:\n\n\n\nFinally: We have enough data to get our first plot:\n\n\n\n\n\n\n",
+    "preview": "posts/2021-09-24-impractical-jokers-first-analysis/impractical-jokers-first-analysis_files/figure-html5/unnamed-chunk-6-1.png",
+    "last_modified": "2021-09-24T11:40:29+02:00",
+    "input_file": {}
+  },
+  {
     "path": "posts/welcome/",
     "title": "Welcome to bored strong nerd",
     "description": "Welcome to bored strong nerd where we look at the numbers of strength-related data and some other stuff.",
@@ -14,6 +31,6 @@
     "contents": "\nHi! Since everybody needs a webpage I pondered (again ;)) about starting a webpage. And what are better topics to talk about than the ones you know a little bit about or are at least interested?\nSo the idea is to talk about these things:\nNerdy stuff because I am a nerd. Though I suck at it one of my favourite pastimes are roguelike games such as Nethack or Angband.\nStrength-related stuff because I am interested in strength-related sport, i.e. strongman, powerlifting, armwrestling, sumo…\nand intersections of these topics such as looking at strength in numbers\nSo without further ado, lets start!\n\n\n\n",
     "preview": {},
     "last_modified": "2021-08-29T14:31:24+02:00",
-    "input_file": "welcome.knit.md"
+    "input_file": {}
   }
 ]
