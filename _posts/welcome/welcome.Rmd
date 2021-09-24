@@ -3,7 +3,7 @@ title: "Welcome to bored strong nerd"
 description: |
   Welcome to bored strong nerd where we look at the numbers of strength-related data and some other stuff. 
 author:
-  - name: Philipp Giese
+  - name: Philman
 output:
   distill::distill_article:
     self_contained: false

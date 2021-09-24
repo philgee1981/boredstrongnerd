@@ -1,9 +1,9 @@
 ---
 title: "Impractical Jokers - first analysis"
 description: |
-  A short description of the post.
+  A short analysis of the losers at impractical Jokers
 author:
-  - name: Philipp Giese
+  - name: Philman
     url: {}
 date: 09-24-2021
 output:
@@ -33,6 +33,7 @@ library(rvest)
 library(rlist)
 library(stringi)
 library(htmltab)
+library(rmarkdown)
 ```
 
 To get the initial information, we neet the [URL](https://en.wikipedia.org/wiki/List_of_Impractical_Jokers_episodes) which can be subsequently analyzed by examining the correct tags: 
@@ -44,10 +45,12 @@ url = 'https://en.wikipedia.org/wiki/List_of_Impractical_Jokers_episodes'
 This URL in itself is already quite interesting as we can get some information about the nine seasons of impractical jokers: 
 
 ```{r}
-url %>%
+data <- url %>%
   read_html() %>% 
   html_node('body #content #bodyContent #mw-content-text .mw-parser-output table') %>%
   html_table(fill = TRUE)
+
+paged_table(data)
 ```
 
 However, not sooo much interesting stuff here. For that we have to dig deeper: 
@@ -73,7 +76,8 @@ for(i in 3:10){
 data_final <- bind_rows(data_final,data_new) 
 }
 
-data_final
+
+paged_table(data_final)
 
 ```
 
@@ -89,6 +93,28 @@ Finally: We have enough data to get our first plot:
 data_final %>% select(No.overall,`No. inseason`,Sal,Joe,Murr,Q) %>% mutate(Sal = cumsum(Sal),Joe = cumsum(Joe),Murr = cumsum(Murr),Q = cumsum(Q)) %>% pivot_longer(cols = c(Sal,Joe,Murr,Q),names_to = "Losers", values_to = "value") %>% mutate(get_lines = ifelse(`No. inseason` == 1,1,0)) %>% ggplot(aes(x=No.overall,y=value,col=Losers)) + geom_point() + labs(title = "Number of losses",subtitle = "How the numbers of losses for the impractical jokers have developed", x = "Episode overall",y= "No. losses total") + theme_minimal()
 ```
 
+Now thats interesting. While we certainly see that Sal is the biggest loser we also see that Murr is catching up and that it was oftentimes a close race between the two. Moreover we see that the position of Joe als "worlds toughest Joker" came up only recently.
 
+To examine these changes a little bit thouroughly lets see how these numbers evolved for each season: 
 
+```{r}
 
+data_final_seasons <- data_final %>% select(No.overall,`No. inseason`,Sal,Joe,Murr,Q, season) %>% filter(season == 1) %>% mutate(Sal = cumsum(Sal),Joe = cumsum(Joe),Murr = cumsum(Murr),Q = cumsum(Q))
+
+for (i in 2:max(data_final$season)){
+  data_final_seasons <- data_final_seasons %>% bind_rows(data_final %>% select(No.overall,`No. inseason`,Sal,Joe,Murr,Q, season) %>% filter(season == i) %>% mutate(Sal = cumsum(Sal),Joe = cumsum(Joe),Murr = cumsum(Murr),Q = cumsum(Q)))
+}
+
+data_final_seasons %>% pivot_longer(cols = c(Sal,Joe,Murr,Q),names_to = "Losers", values_to = "value") %>% mutate(get_lines = ifelse(`No. inseason` == 1,1,0)) %>% ggplot(aes(x=`No. inseason`,y=value,col=Losers)) + geom_line() + labs(title = "Number of losses",subtitle = "How the numbers of losses for the impractical jokers have developed", x = "Episode in season",y= "No. losses in season") +facet_wrap(vars(season)) + theme_minimal()
+```
+
+And here we have it: Yes, Sal was most of the time the biggest loser of the season. However, in seasons 1 and 6 there were some other jokers close to his count. Recently, in the seasons 8 and 9, Sal handed over the top position to Murr. 
+
+That finding can even be summarized a little bit: 
+
+```{r}
+data_final_seasons %>% group_by(season) %>% slice_tail() %>% pivot_longer(cols = c(Sal,Joe,Murr,Q),names_to = "Losers", values_to = "value") %>% ggplot(aes(x=as.character(season), y=value, fill=Losers)) + geom_col(position = "dodge") + labs(title = "Number of losses",subtitle = "How the numbers of losses for the impractical jokers was per season", x = "Season",y= "No. losses in season") + theme_minimal()
+```
+There you have it (for now): Whilee Sall definitely is currently the biggest loser of Impractical Jokers Murr was oftentimes close behind him - and recently could surpass him. 
+
+Currently I am working on an analysis of the challenges. I will post more about that when there is sth to tell :)
