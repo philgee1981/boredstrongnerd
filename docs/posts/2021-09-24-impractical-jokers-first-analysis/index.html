@@ -2078,6 +2078,9 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="nav-right">
 <a href="../../index.html">Home</a>
 <a href="../../about.html">About</a>
+<a>
+<i class="fas fa-djust" aria-hidden="true"></i>
+</a>
 <a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
 </div>
 </nav>
@@ -2292,7 +2295,7 @@ Show code
 </details>
 <p><img src="impractical-jokers-first-analysis_files/figure-html5/unnamed-chunk-8-1.png" width="624" /></p>
 </div>
-<p>There you have it (for now): Whilee Sall definitely is currently the biggest loser of Impractical Jokers Murr was oftentimes close behind him - and recently could surpass him.</p>
+<p>There you have it (for now): While Sal definitely is currently the biggest loser of Impractical Jokers Murr was oftentimes close behind him - and recently could surpass him.</p>
 <p>Currently I am working on an analysis of the challenges. I will post more about that when there is sth to tell :)</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
@@ -2304,6 +2307,40 @@ Show code
 
 
 <!--radix_placeholder_site_after_body-->
+<script>
+const darkmodeToggle = document.getElementsByClassName("fas fa-adjust")[0];
+let theme = localStorage.getItem("theme");
+
+if (!theme) {
+  if (window.matchMedia("(prefers-color-scheme: dark)").matches ) {
+    theme = "dark";
+  } else {
+    theme = "light";
+  }
+}
+setTheme();
+
+function switchTheme() {
+  if (theme === "light") {
+    theme = "dark";
+  } else {
+    theme = "light";
+  }
+  localStorage.setItem("theme", theme);
+  setTheme();
+  console.log(theme);
+}
+
+function setTheme() {
+  if (theme === "dark") {
+    document.body.classList.add('darkmode');
+  } else {
+    document.body.classList.remove('darkmode');
+  }
+}
+
+darkmodeToggle.addEventListener('click', switchTheme)
+</script>
 <!--/radix_placeholder_site_after_body-->
 <!--radix_placeholder_appendices-->
 <div class="appendix-bottom"></div>

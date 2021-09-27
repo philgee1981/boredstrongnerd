@@ -156,6 +156,6 @@ data_final_seasons %>% group_by(season) %>%
        y= "No. losses in season") + 
   theme_minimal()
 ```
-There you have it (for now): Whilee Sall definitely is currently the biggest loser of Impractical Jokers Murr was oftentimes close behind him - and recently could surpass him. 
+There you have it (for now): While Sal definitely is currently the biggest loser of Impractical Jokers Murr was oftentimes close behind him - and recently could surpass him. 
 
 Currently I am working on an analysis of the challenges. I will post more about that when there is sth to tell :)
